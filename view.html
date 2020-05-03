@@ -1,0 +1,109 @@
+<html>
+<head>
+
+ 
+          <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+
+    
+ 
+   
+
+</head>
+<body>
+<div >
+<nav class="navbar navbar-inverse">
+       
+        <div class="navbar-header">
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand">Olimin.in</a>
+        </div>
+        
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Online Enquiry List</a> </li>
+            </ul>
+            
+        </div>
+    </nav>
+<div style="padding:20px;">
+  <table id="EnquiryTable" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Roof Area</th>
+          <th>Service Load</th>
+          <th>Monthly units</th>
+          <th>Date</th>
+      </tr>
+    </thead>
+    
+    <tfoot>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+    </tfoot>
+  </table>
+  </div><!-- table div -->
+  </div><!--container-->
+
+<script src='https://code.jquery.com/jquery-1.12.3.js'></script>
+   <script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+   <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
+   <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" charset="utf-8"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" charset="utf-8"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" charset="utf-8"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" charset="utf-8"></script>
+   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
+   <script type="text/javascript">
+  $(document).ready(function() {
+        $("#EnquiryTable").dataTable(
+        {
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
+           'columnDefs': [{
+					 'targets': 2,
+					 'searchable': false,
+					 'orderable': false,
+					 'className': 'dt-body-center'
+				  }],
+					order: [[ 5, 'desc' ]],
+                    
+					"processing": true,
+					/*"pagingType": "full_numbers",
+					"serverSide": true,*/
+					"ajax":{
+						url :"CRUD.php", // json datasource
+						data: {type :"Enquire"},
+						type: "post",  // method  , by default get
+						error: function(data,responseText){  // error handling
+							console.log(data);
+							console.log(responseText);
+							$("#EnquiryTable").append('<tbody class="employee-grid-error"><tr><th colspan="3">No Booking found. Try another date</th></tr></tbody>');
+							
+							
+						}
+					}
+        
+        });
+   
+  });
+  </script>
+ 
+</body>
+</html>
